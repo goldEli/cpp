@@ -80,6 +80,23 @@ void addPerson(AddressBooks *abs)
      abs->m_Size++;
 }
 
+void showPersons(AddressBooks *abs)
+{
+     if (abs->m_Size == 0)
+     {
+          cout << "没有可以展示的联系人" << endl;
+          return;
+     }
+     for (int i = 0; i < abs->m_Size; ++i)
+     {
+          cout << "姓名：" << abs->persionArray[i].m_Name << "\t";
+          cout << "性别：" << (abs->persionArray[i].m_Sex == 1 ? "男" : "女") << "\t";
+          cout << "年龄：" << abs->persionArray[i].m_Age << "\t";
+          cout << "电话：" << abs->persionArray[i].m_Phone << "\t";
+          cout << "地址：" << abs->persionArray[i].m_Addr << "\t" << endl;
+     }
+}
+
 int main(int argc, const char *argv[])
 {
 
@@ -123,6 +140,9 @@ int main(int argc, const char *argv[])
           {
           case 1:
                addPerson(&abs);
+               break;
+          case 2:
+               showPersons(&abs);
                break;
           case 0:
                cout << "欢迎下次使用" << endl;
