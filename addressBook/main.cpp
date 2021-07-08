@@ -25,25 +25,70 @@ using namespace std;
 struct Person
 {
      string m_Name;
+     // 男1女2
      int m_Sex;
      int m_Age;
      string m_Phone;
      string m_Addr;
 };
 
-struct AddressBook
+struct AddressBooks
 {
      struct Person persionArray[MAX];
      int m_Size;
 };
 
+void addPerson(AddressBooks *abs)
+{
+     string name;
+     cout << "姓名：";
+     cin >> name;
+     int sex;
+     cout << "男1女2" << endl;
+     cout << "性别：";
+     while (1)
+     {
+          if (!cin)
+          {
+               cin.clear();
+               cin.ignore();
+          }
+          cin >> sex;
+
+          if (sex == 1 || sex == 2)
+          {
+               break;
+          }
+          cout << "请输入正确的性别" << endl;
+     }
+
+     int age;
+     cout << "年龄：";
+     cin >> age;
+     string phone;
+     cout << "电话：";
+     cin >> phone;
+     string addr;
+     cout << "地址：";
+     cin >> addr;
+
+     abs->persionArray[abs->m_Size].m_Name = name;
+     abs->persionArray[abs->m_Size].m_Sex = sex;
+     abs->persionArray[abs->m_Size].m_Age = age;
+     abs->persionArray[abs->m_Size].m_Phone = phone;
+     abs->persionArray[abs->m_Size].m_Addr = addr;
+     abs->m_Size++;
+}
+
 int main(int argc, const char *argv[])
 {
 
+     AddressBooks abs;
+
+     abs.m_Size = 0;
+
      while (1)
      {
-          system("cls");
-          system("clear");
           int num = 0;
           cout << "*****"
                << "***********"
@@ -77,8 +122,7 @@ int main(int argc, const char *argv[])
           switch (num)
           {
           case 1:
-               cout << num << endl;
-               system("read -n 1 -s -p \"Press any key to continue...\"");
+               addPerson(&abs);
                break;
           case 0:
                cout << "欢迎下次使用" << endl;
@@ -86,9 +130,10 @@ int main(int argc, const char *argv[])
           default:
                break;
           }
+          system("read -n 1 -s -p \"Press any key to continue...\"");
+          system("cls");
+          system("clear");
      }
-
-     system("read -n 1 -s -p \"Press any key to continue...\"");
 
      return 0;
 }
