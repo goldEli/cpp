@@ -97,6 +97,37 @@ void showPersons(AddressBooks *abs)
      }
 }
 
+int isExist(AddressBooks *abs, string name)
+{
+     for (int i = 0; i < abs->m_Size; ++i)
+     {
+          if (name == abs->persionArray[i].m_Name)
+          {
+               return i;
+          }
+     }
+     return -1;
+}
+
+void delPerson(AddressBooks *abs)
+{
+     string name;
+     cout << "请输入删除的联系人：";
+     cin >> name;
+     int ret = isExist(abs, name);
+     if (ret == -1)
+     {
+          cout << name << "该用户不存在" << endl;
+          return;
+     }
+     for (int i = ret; i < abs->m_Size; ++i)
+     {
+          abs->persionArray[i] = abs->persionArray[i + 1];
+     }
+     abs->m_Size--;
+     cout << "删除" << name << "成功" << endl;
+}
+
 int main(int argc, const char *argv[])
 {
 
@@ -138,11 +169,14 @@ int main(int argc, const char *argv[])
           cin >> num;
           switch (num)
           {
-          case 1:
+          case 1: //添加
                addPerson(&abs);
                break;
-          case 2:
+          case 2: // 显示
                showPersons(&abs);
+               break;
+          case 3: // 删除
+               delPerson(&abs);
                break;
           case 0:
                cout << "欢迎下次使用" << endl;
