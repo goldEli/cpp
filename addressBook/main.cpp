@@ -37,8 +37,17 @@ struct AddressBooks
      struct Person persionArray[MAX];
      int m_Size;
 };
+void printPerson(AddressBooks *abs, int i)
+{
 
-void addPerson(AddressBooks *abs)
+     cout << "姓名：" << abs->persionArray[i].m_Name << "\t";
+     cout << "性别：" << (abs->persionArray[i].m_Sex == 1 ? "男" : "女") << "\t";
+     cout << "年龄：" << abs->persionArray[i].m_Age << "\t";
+     cout << "电话：" << abs->persionArray[i].m_Phone << "\t";
+     cout << "地址：" << abs->persionArray[i].m_Addr << "\t" << endl;
+}
+
+void insertByIndex(AddressBooks *abs, int i)
 {
      string name;
      cout << "姓名：";
@@ -72,11 +81,16 @@ void addPerson(AddressBooks *abs)
      cout << "地址：";
      cin >> addr;
 
-     abs->persionArray[abs->m_Size].m_Name = name;
-     abs->persionArray[abs->m_Size].m_Sex = sex;
-     abs->persionArray[abs->m_Size].m_Age = age;
-     abs->persionArray[abs->m_Size].m_Phone = phone;
-     abs->persionArray[abs->m_Size].m_Addr = addr;
+     abs->persionArray[i].m_Name = name;
+     abs->persionArray[i].m_Sex = sex;
+     abs->persionArray[i].m_Age = age;
+     abs->persionArray[i].m_Phone = phone;
+     abs->persionArray[i].m_Addr = addr;
+}
+
+void addPerson(AddressBooks *abs)
+{
+     insertByIndex(abs, abs->m_Size);
      abs->m_Size++;
 }
 
@@ -89,11 +103,7 @@ void showPersons(AddressBooks *abs)
      }
      for (int i = 0; i < abs->m_Size; ++i)
      {
-          cout << "姓名：" << abs->persionArray[i].m_Name << "\t";
-          cout << "性别：" << (abs->persionArray[i].m_Sex == 1 ? "男" : "女") << "\t";
-          cout << "年龄：" << abs->persionArray[i].m_Age << "\t";
-          cout << "电话：" << abs->persionArray[i].m_Phone << "\t";
-          cout << "地址：" << abs->persionArray[i].m_Addr << "\t" << endl;
+          printPerson(abs, i);
      }
 }
 
@@ -126,6 +136,43 @@ void delPerson(AddressBooks *abs)
      }
      abs->m_Size--;
      cout << "删除" << name << "成功" << endl;
+}
+
+void findPerson(AddressBooks *abs)
+{
+     string name;
+     cout << "请输入查找人的姓名:" << endl;
+     cin >> name;
+     int ret = isExist(abs, name);
+     if (ret == -1)
+     {
+          cout << "查无此人" << endl;
+     }
+     else
+     {
+          printPerson(abs, ret);
+     }
+}
+
+void modifyPerson(AddressBooks *abs)
+{
+     string name;
+     cout << "请输入修改人的姓名:" << endl;
+     cin >> name;
+     int ret = isExist(abs, name);
+     if (ret == -1)
+     {
+          cout << "查无此人" << endl;
+     }
+     else
+     {
+          insertByIndex(abs, ret);
+     }
+}
+
+void emptyAddressBooks(AddressBooks *abs) {
+     abs->m_Size = 0;
+     cout << "通讯录已清空" << endl;
 }
 
 int main(int argc, const char *argv[])
@@ -177,6 +224,15 @@ int main(int argc, const char *argv[])
                break;
           case 3: // 删除
                delPerson(&abs);
+               break;
+          case 4:
+               findPerson(&abs);
+               break;
+          case 5:
+               modifyPerson(&abs);
+               break;
+          case 6:
+               emptyAddressBooks(&abs);
                break;
           case 0:
                cout << "欢迎下次使用" << endl;
